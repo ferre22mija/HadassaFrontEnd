@@ -1,0 +1,11 @@
+.rotado1{
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 250px solid white;
+    border-top: 100px solid transparent;
+    border-bottom: 500px solid transparent;
+}
+.rotado2{
+    transform: rotate(45deg);
+}
