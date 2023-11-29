@@ -1,17 +1,22 @@
 import { MoonIcon, SunIcon } from "@chakra-ui/icons"
-import { Box, Button, Flex, Image, useColorMode } from "@chakra-ui/react"
-import logo from "../../assets/LogoSistema.png";
+import { Box, Button, Flex, Image, Spacer, Text, useColorMode, useColorModeValue } from "@chakra-ui/react"
+
 function MenuTop() {
-    const { colorMode, toggleColorMode } = useColorMode()
+  const { colorMode, toggleColorMode } = useColorMode()
+  const colorBorder = useColorModeValue("#E2E8F0","black");
+  const styleBorder = "2px solid"+ colorBorder;
   return (
-    <Box p="2" >
-        <Flex>
-        <Image boxSize="200px"  src={logo}/>
+    <Box w="100%" >
+      <Flex borderBottom={styleBorder}p="2" h="8vh">
+
+
+        <Spacer />
         <Button onClick={toggleColorMode} >
-            {colorMode === 'light' ? <SunIcon/> : <MoonIcon/>}
+          {colorMode === 'light' ? <SunIcon /> : <MoonIcon />}
         </Button>
-        </Flex>
-        
+        <Button>Usuario</Button>
+      </Flex>
+
     </Box>
   )
 }

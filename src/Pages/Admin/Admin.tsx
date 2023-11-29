@@ -8,14 +8,17 @@ function Admin() {
   return (
     <>
 
-      <MenuTop />
+
 
       <Flex>
         <Menuleft />
-        <Box w="85%" >
+        <Flex direction="column" w="100%">
+        <MenuTop />
         <Outlet />
-        </Box>
+        </Flex>
         
+
+
       </Flex>
 
     </>
