@@ -1,44 +1,51 @@
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, Center, Flex, Image, Text, useColorModeValue } from "@chakra-ui/react"
 import logo from "../../assets/Logo.png";
 import MENU from "../../Data/Menu";
-// import { useState } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 interface Menu {
-  id:number,
-  nombre:string,
-  padreId:number,
-  ruta:string,
-  hijos?:Array<any>
+  id: number,
+  nombre: string,
+  padreId: number | null,
+  ruta: string,
+  hijos: Array<any>
 }
 function Menuleft() {
   const colorBorder = useColorModeValue("#E2E8F0", "black");
   const styleBorder = "2px solid" + colorBorder;
   // const initialMenu = MENU;
-  // const [orderMenu,SetOrderMenu] = useState([]);
-  function convertMenuChilds(){
-    let newMenu:Array<Menu> = [];
+  const [orderMenu, SetOrderMenu] = useState(Array<Menu>);
+  function convertMenuChilds() {
+    let newMenu: Array<Menu> = [];
     let i = 0
     while (MENU.length > 0) {
-      let valor:any = MENU[i];
-      if(valor.padreId === null) {
+      let valor: Menu = { ...MENU[i], hijos: [] };
+      console.log("entrando en " + i, valor)
+      if (valor.padreId === null) {
         newMenu.push(valor)
-        MENU.splice(i,1);
-        i=0;
-      }else{
-        const found = newMenu.find((element)=>element.id === valor.padreId)
-        if(found === undefined) {
+        MENU.splice(i, 1);
+        console.log("valor de Menu en " + i, MENU)
+        i = 0;
+      } else {
+        const found = newMenu.find((element) => element.id === valor.padreId)
+        if (found === undefined) {
+          console.log("no encontrado", newMenu);
           i++
-        }else{
-          found.hijos?.push(valor)
-          
-          MENU.splice(i,1)
-          console.log("hijo encontrado",[found,MENU])
-          i=0;
+        } else {
+          found.hijos.push(valor)
+
+          MENU.splice(i, 1)
+          console.log("hijo encontrado", { encontrado: found, menu: MENU })
+          i = 0;
         }
       }
-      
+
     }
-    console.log(newMenu)
+    return newMenu;
   }
+
+  useEffect(() => {
+  }, [])
   return (
     <Box w="300px" h="100vh">
       <Flex p="2" borderBottom={styleBorder} h="8vh">
@@ -47,7 +54,7 @@ function Menuleft() {
       </Flex>
       <Box h="92vh" bg="#222b40" >
         <Accordion allowToggle color="white">
-          <Button onClick={convertMenuChilds}>hagame</Button>
+          <Button onClick={() => { SetOrderMenu(convertMenuChilds()); console.log("orderMenu", orderMenu) }}>hagame</Button>
           <Item />
         </Accordion>
       </Box>
