@@ -1,34 +1,32 @@
 import { Accordion, Box, Button } from "@chakra-ui/react";
 
 import { useEffect, useState } from "react";
-import MapHijos from "./Utilities/MapHijos";
 import Menu from "../../Models/Menu";
 import { Item } from "./Components";
+import { GetMenus } from "../../Services";
+import { createAddaptedMenu } from "../../Addapters";
 
 function Menuleft() {
   // const initialMenu = MENU;
   const [orderMenu, SetOrderMenu] = useState(new Map());
-  useEffect(()=>{
-    
-  },[])
+  useEffect(() => {
+    const listaMenu = GetMenus();
+    let newItems = new Map<number, Menu>();
+    listaMenu.forEach((item: any) => {
+      const menuItemAdapter: Menu = createAddaptedMenu(item);
+      newItems.set(menuItemAdapter.id, menuItemAdapter);
+    });
+    newItems.forEach((ele: any) => {
+      if (ele.padreId !== null) {
+        newItems.get(ele.padreId)?.hijos.push(ele.id);
+      }
+    });
+    SetOrderMenu(newItems);
+  }, []);
   return (
     <>
       <Box>
         <Accordion allowMultiple color="white">
-          <Button
-            onClick={() => {
-              SetOrderMenu(MapHijos());
-            }}
-          >
-            hagame
-          </Button>
-          <Button
-            onClick={() => {
-              console.log("orderMenu", orderMenu);
-            }}
-          >
-            ver
-          </Button>
           {Array.from(orderMenu.keys()).map((key: number) => {
             let menuSelec: Menu = orderMenu.get(key);
             if (menuSelec.padreId == null) {
