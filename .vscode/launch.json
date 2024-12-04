@@ -1,10 +1,9 @@
 {
     "version": "1.0.0",
     "configurations": [
-
         {
             "name": "Start App",
-            "runtimeVersion": "18.18.2",
+            // "runtimeVersion": "16.0.0",
             "runtimeArgs": ["start"],
             "env": {
                 "BROWSER": "none"
